@@ -1,0 +1,98 @@
+
+const express = require('express');
+const DataBase = require('./data/db.js');
+const server = express();
+
+server.use(express.json());
+
+
+
+server.get('/', (request, response) => {
+    response.send(`
+    	<h2>Lambda Node Api 2 Project</h2>
+    	<p>Welcome to the DataBase!</p>
+	`);
+});
+
+server.get('/api/posts', (request, response) => {
+    // // response.status(200).json(users);
+
+    // if (!response.status(200).json(users)) {
+    //     response.status(404).json({message: 'users not found!'})
+    // } else {
+    //     response.status(200).json(users);
+    // }
+})
+
+server.get('/api/posts/:id', (request, response) => {
+    // // response.status(200).json(users);
+
+    // const { getUserId } = request.params;
+    // // console.log('server.delete: by id: ', id);
+
+    // const foundGetUserId = users.find((users) => users.getUserId === getUserId);
+
+    // if(foundGetUserId) {
+    //     users = users.filter(user => user.getUserId !== getUserId)
+    //     response.status(200).json(foundGetUserId)
+    // } else {
+    //     response.status(404).json({message: 'user not found!'})
+    // }
+});
+
+server.get('/api/posts/:id/comments', (request, response) => {
+
+});
+
+
+
+server.post('/api/posts', (request, response) => {
+    // const userInfo = request.body;
+
+    // userInfo.id = shortid.generate();
+    // userInfo.name = '';
+    // userInfo.bio = '';
+    // users.push(userInfo);
+
+    // response.status(201).json(userInfo)
+});
+
+server.post('/api/posts/:id/comments', (request, response) => {
+
+});
+
+
+
+server.delete('/api/posts/:id', (request, response) => {
+    // const { id } = request.params;
+    // // console.log('server.delete: by id: ', id);
+
+    // const foundId = users.find((users) => users.id === id);
+
+    // if(foundId) {
+    //     users = users.filter(user => user.id !== id)
+    //     response.status(200).json(foundId)
+    // } else {
+    //     response.status(404).json({message: 'user not found!'})
+    // }
+
+});
+
+
+
+server.put('/api/posts/:id', (request, response) => {
+    // const { id } = request.params;
+    // const changes = request.body;
+
+    // let foundId = users.find((users) => users.id === id);
+
+    // if(foundId) {
+    //     Object.assign(foundId, changes);
+    //     response.status(200).json(foundId);
+    // } else {
+    //     response.status(404).json({message: 'user not found!'})
+    // }
+})
+
+
+module.exports = server;
