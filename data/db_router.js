@@ -4,7 +4,7 @@ const DataBase = require('./db.js');
 const router = express.Router();
 
 
-router.get('/api/posts', (request, response) => {
+router.get('/', (request, response) => {
 	DataBase.find(request.query)
 		.then(data => {
 			response.status(200).json(data);
@@ -17,7 +17,7 @@ router.get('/api/posts', (request, response) => {
 		});
 });
 
-router.get('/api/posts/:id', (request, response) => {
+router.get('/:id', (request, response) => {
 	DataBase.findById(request.params.id)
 		.then(data => {
 			if (data) {
@@ -37,7 +37,7 @@ router.get('/api/posts/:id', (request, response) => {
     
 });
 
-router.get('/api/posts/:id/comments', (request, response) => {
+router.get('/:id/comments', (request, response) => {
 	DataBase.findPostComments(request.params.id)
 		.then(data => {
 			if (data) {
@@ -58,7 +58,7 @@ router.get('/api/posts/:id/comments', (request, response) => {
 
 
 
-router.post('/api/posts', (request, response) => {
+router.post('/posts', (request, response) => {
 	DataBase.insert(request.body)
 		.then(data => {
 			response.status(201).json(data);
@@ -68,7 +68,7 @@ router.post('/api/posts', (request, response) => {
 		});
 });
 
-router.post('/api/posts/:id/comments', (request, response) => {
+router.post('/:id/comments', (request, response) => {
 	DataBase.insertComment(request.body)
 		.then(data => {
 			response.status(201).json(data);
@@ -80,7 +80,7 @@ router.post('/api/posts/:id/comments', (request, response) => {
 
 
 
-router.delete('/api/posts/:id', (request, response) => {
+router.delete('/:id', (request, response) => {
 
 	DataBase.remove(request.params.id)
 		.then(count => {
@@ -103,7 +103,7 @@ router.delete('/api/posts/:id', (request, response) => {
 
 
 
-router.put('/api/posts/:id', (request, response) => {
+router.put('/:id', (request, response) => {
 	const changes = request.body;
 
 	DataBase.update(request.params.id, changes)
@@ -124,3 +124,6 @@ router.put('/api/posts/:id', (request, response) => {
 		});
     
 });
+
+
+module.exports = router;
