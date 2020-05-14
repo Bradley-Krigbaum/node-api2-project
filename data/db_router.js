@@ -12,7 +12,7 @@ router.get('/', (request, response) => {
 		.catch(error => {
 			console.log(error);
 			response.status(500).json({
-				message: "Error Retrieving The Requested Data."
+				error: "The posts information could not be retrieved."
 			});
 		});
 });
@@ -24,14 +24,14 @@ router.get('/:id', (request, response) => {
 				response.status(200).json(data);
 			} else {
 				response.status(404).json({
-					message: "Error Retrieving The Requested Data."
+					message: "The post with the specified ID does not exist."
 				});
 			}
 		})
 		.catch(error => {
 			console.log(error);
 			response.status(500).json({
-				message: "Error Retrieving The Requested Data."
+				error: "The post information could not be retrieved."
 			});
 		});
     
@@ -44,14 +44,14 @@ router.get('/:id/comments', (request, response) => {
 				response.status(200).json(data);
 			} else {
 				response.status(404).json({
-					message: "Error Retrieving The Requested Data."
+					message: "The post with the specified ID does not exist."
 				})
 			}
 		})
 		.catch(error => {
 			console.log(error);
 			response.status(500).json({
-				message: "Error Retrieving The Requested Data."
+				error: "The comments information could not be retrieved."
 			});
 		});
 });
@@ -61,10 +61,17 @@ router.get('/:id/comments', (request, response) => {
 router.post('/posts', (request, response) => {
 	DataBase.insert(request.body)
 		.then(data => {
-			response.status(201).json(data);
+			if (data.title || data.contents) {
+				response.status(201).json(data);
+			} else if (!data.text) {
+				response.status(400).json({errorMessage: "Please provide text for the comment."})
+			} else {
+				response.status(404).json({message: "The post with the specified ID does not exist."});
+			};
+			
 		})
 		.catch(error => {
-			response.status(500).json(error);
+			response.status(500).json({error: "There was an error while saving the post to the database"});
 		});
 });
 
@@ -88,7 +95,7 @@ router.delete('/:id', (request, response) => {
 				response.status(200).json({message: "The Requested Data Has Been Removed."});
 			} else {
 				response.status(404).json({
-					message: "Error Retrieving The Requested Data."
+					message: "The post with the specified ID does not exist."
 				});
 			}
 		})
@@ -111,15 +118,15 @@ router.put('/:id', (request, response) => {
 			if (data) {
 				response.status(200).json(data);
 			} else {
-				response.status(404).json({
-					message: "Error Retrieving The Requested Data."
+				response.status(400).json({
+					errorMessage: "Please provide title and contents for the post."
 				});
 			}
 		})
 		.catch(error => {
 			console.log(error);
 			response.status(500).json({
-				message: "Error Retrieving The Requested Data."
+				error: "The post information could not be modified."
 			});
 		});
     
